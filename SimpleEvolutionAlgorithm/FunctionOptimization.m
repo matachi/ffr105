@@ -45,8 +45,6 @@ for iGeneration = 1:numberOfGenerations
     chromosome1 = population(i1,:);
     chromosome2 = population(i2,:);
 
-    tempPopulation = population;
-
     r = rand;
     if (r < crossoverProbability)
       newChromosomePair = Cross(chromosome1, chromosome2);
@@ -65,7 +63,7 @@ for iGeneration = 1:numberOfGenerations
   end
 
   tempPopulation(1,:) = population(bestIndividualIndex,:);
-  populaiton = tempPopulation;
+  population = tempPopulation;
 
 end % Loop over generations
 
