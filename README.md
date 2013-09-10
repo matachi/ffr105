@@ -9,3 +9,6 @@
 The code for the introduction guide can be found in
 [SimpleEvolutionAlgorithm/](SimpleEvolutionAlgorithm/). Execute the evolution
 with the command `FunctionOptimization` in Matlab.
+
+![Simple Evolution Algorithm
+Screenshot](SimpleEvolutionAlgorithm/screenshot.png)
