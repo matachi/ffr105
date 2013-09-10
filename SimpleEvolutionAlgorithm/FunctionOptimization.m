@@ -7,8 +7,6 @@ variableRange = 3.0;
 numberOfGenerations = 100;
 fitness = zeros(populationSize, 1);
 
-population = InitializePopulation(populationSize, numberOfGenes);
-
 fitnessFigureHandle = figure;
 hold on;
 set(fitnessFigureHandle, 'Position', [50, 50, 1000, 500]);
@@ -19,6 +17,32 @@ textHandle = text(30, 2.6, sprintf('best: %4.3f', 0.0));
 hold off;
 drawnow;
 
+surfaceFigureHandle = figure;
+hold on;
+set(surfaceFigureHandle, 'DoubleBuffer', 'on');
+delta = 0.1;
+limit = fix(2*variableRange/delta) + 1;
+[xValues, yValues] = meshgrid(-variableRange:delta:variableRange, ...
+                              -variableRange:delta:variableRange);
+zValues = zeros(limit, limit);
+for j = 1:limit
+  for k = 1:limit
+    zValues(j, k) = EvaluateIndividual([xValues(j, k) yValues(j, k)]);
+  end
+end
+surfl(xValues, yValues, zValues)
+colormap gray;
+shading interp;
+view([-7 -9 10]);
+decodedPopulation = zeros(populationSize, 2);
+populationPlotHandle = plot3(decodedPopulation(:,1), ...
+                             decodedPopulation(:,2), ...
+                             fitness(:), 'kp');
+hold off;
+drawnow;
+
+population = InitializePopulation(populationSize, numberOfGenes);
+
 for iGeneration = 1:numberOfGenerations
 
   maximumFitness = 0.0;
@@ -27,6 +51,7 @@ for iGeneration = 1:numberOfGenerations
   for i = 1:populationSize
     chromosome = population(i,:);
     x = DecodeChromosome(chromosome, variableRange);
+    decodedPopulation(i,:) = x;
     fitness(i) = EvaluateIndividual(x);
     if (fitness(i) > maximumFitness)
       maximumFitness = fitness(i);
@@ -80,6 +105,8 @@ for iGeneration = 1:numberOfGenerations
   plotvector(iGeneration) = maximumFitness;
   set(bestPlotHandle, 'YData', plotvector);
   set(textHandle, 'String', sprintf('best: %4.3f', maximumFitness));
+  set(populationPlotHandle, 'XData', decodedPopulation(:,1), 'YData', ...
+      decodedPopulation(:,2), 'ZData', fitness(:));
   drawnow;
 
 end % Loop over generations
