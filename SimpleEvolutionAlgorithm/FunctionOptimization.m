@@ -9,6 +9,16 @@ fitness = zeros(populationSize, 1);
 
 population = InitializePopulation(populationSize, numberOfGenes);
 
+fitnessFigureHandle = figure;
+hold on;
+set(fitnessFigureHandle, 'Position', [50, 50, 1000, 500]);
+set(fitnessFigureHandle, 'DoubleBuffe', 'on');
+axis([1 numberOfGenerations 2.5 3]);
+bestPlotHandle = plot(1:numberOfGenerations, zeros(1, numberOfGenerations));
+textHandle = text(30, 2.6, sprintf('best: %4.3f', 0.0));
+hold off;
+drawnow;
+
 for iGeneration = 1:numberOfGenerations
 
   maximumFitness = 0.0;
@@ -64,6 +74,12 @@ for iGeneration = 1:numberOfGenerations
 
   tempPopulation(1,:) = population(bestIndividualIndex,:);
   population = tempPopulation;
+
+  plotvector = get(bestPlotHandle, 'YData');
+  plotvector(iGeneration) = maximumFitness;
+  set(bestPlotHandle, 'YData', plotvector);
+  set(textHandle, 'String', sprintf('best: %4.3f', maximumFitness));
+  drawnow;
 
 end % Loop over generations
 
