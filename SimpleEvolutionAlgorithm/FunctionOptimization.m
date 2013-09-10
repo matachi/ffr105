@@ -35,6 +35,7 @@ for iGeneration = 1:numberOfGenerations
     end
   end
 
+  % Decoding without the elitism selection
   %for i = 1:populationSize
   %  chromosome = population(i,:);
   %  x = DecodeChromosome(chromosome, variableRange);
