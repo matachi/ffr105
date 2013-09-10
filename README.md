@@ -12,3 +12,6 @@ with the command `FunctionOptimization` in Matlab.
 
 ![Simple Evolution Algorithm
 Screenshot](SimpleEvolutionAlgorithm/screenshot.png)
+
+Screenshot caption: On the image is the algorithm still running through the
+generations, which explains the drop/fall in the left figure.
